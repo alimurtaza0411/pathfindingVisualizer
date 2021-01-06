@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style.css">
+	<title>Grid</title>
+</head>
+	<body>
+		<div class="Navbar">
+			<ul>
+				<li class='start-state' data-state="start" onclick="changeState(this)">Start</li>
+				<li class='wall-state' data-state="wall" onclick="changeState(this)">Wall</li>
+				<li class='end-state' data-state="end" onclick="changeState(this)">End</li>
+				<li class='visualize' onclick="visualize()">Visualize</li>
+			</ul>
+		</div>
+		<div id="Grid" class="Grid">
+		</div>
+		<script>
+			class Queue {
+				constructor(){
+					this.a = new Array();
+				}
+				isEmpty(){
+					return this.a.length==0;
+				}
+				enqueue(element){
+					this.a.push(element);
+				}
+				dequeue(){
+					if(!this.isEmpty()){
+						return this.a.shift();
+					}
+				}
+				rev(){
+					this.a.reverse();
+				}
+				empty(){
+					this.a=[];
+				}
+				print(){
+					var line="";
+					for(let i=0;i<this.a.length;i++){
+						line += this.a[i][0] +" " + this.a[i][1] + ", ";
+					}
+					console.log(line);
+				}
+			}
+			//variables
+			var wall = false;
+			var x = 50, y=20;
+			var grid ="";
+			var w = 25;
+			var h = 25;
+			var start_x =2;
+			var start_y =2;
+			var end_x = 47;
+			var end_y = 17;
+			var state = "";
+			var path = new Queue();
+			var queue = new Queue();
+			var start = "<div class='start'></div>";
+			var end = "<div class='end'></div>";
+			function bfs_vis(){
+				document.querySelector(`div[data-x="${start_x}"][data-y="${start_y}"]`).dataset.visited =1;
+				queue.enqueue([start_x,start_y]);
+				bfs();
+			}
+			function bfs(){
+				if(queue.isEmpty()){
+					return;
+				}
+				//console.log("bfs");
+				var u = queue.dequeue();
+				const el = document.querySelector(`div[data-x="${u[0]}"][data-y="${u[1]}"]`);
+				if(el.dataset.state=='end'){
+					path.enqueue([u[0],u[1]]);
+					el.dataset.state = 'path';
+					console.log('end');
+					return;
+				}
+				var ad1;
+				var ad2;
+				var ad3;
+				var ad4;
+				el.classList.add('bfs');
+				if(u[0]-1>=0){
+					ad1 =document.querySelector(`div[data-x="${u[0]-1}"][data-y="${u[1]}"]`);
+					if(ad1.dataset.visited==0 && ad1.dataset.state!='wall'){
+						queue.enqueue([u[0]-1,u[1]]);
+						ad1.dataset.visited = 1;
+					}
+					else{
+						ad1 = undefined;
+					}
+				}
+				if(u[0]+1<x){
+					ad2 =document.querySelector(`div[data-x="${u[0]+1}"][data-y="${u[1]}"]`);
+					if(ad2.dataset.visited==0 && ad2.dataset.state!='wall'){
+						queue.enqueue([u[0]+1,u[1]]);
+						ad2.dataset.visited = 1;	
+					}
+					else{
+						ad2 = undefined;
+					}
+				}
+				if(u[1]-1>=0){
+					ad3 =document.querySelector(`div[data-x="${u[0]}"][data-y="${u[1]-1}"]`);
+					if(ad3.dataset.visited==0 && ad3.dataset.state!='wall'){
+						queue.enqueue([u[0],u[1]-1]);
+						ad3.dataset.visited = 1;
+					}
+					else{
+						ad3 = undefined;
+					}
+				}
+				if(u[1]+1<y){
+					ad4 = document.querySelector(`div[data-x="${u[0]}"][data-y="${u[1]+1}"]`);
+					if(ad4.dataset.visited==0 && ad4.dataset.state!='wall'){
+						queue.enqueue([u[0],u[1]+1]);
+						ad4.dataset.visited = 1;
+					}
+					else{
+						ad4 = undefined;
+					}
+				}
+
+				bfs();
+					if((ad1 && ad1.dataset.state=='path') || (ad2 && ad2.dataset.state=='path') || (ad3 && ad3.dataset.state=='path') || (ad4 && ad4.dataset.state=='path')){
+						console.log('a');
+						path.enqueue([u[0],u[1]]);
+						el.dataset.state = 'path';
+					}
+
+			}
+
+
+			//visualization
+			function addPath(){
+				if(path.isEmpty()){
+					return;
+				}
+				var b = path.dequeue();
+				//console.log(b[0],b[1]);
+				document.querySelector(`div[data-x="${b[0]}"][data-y="${b[1]}"]`).classList.add('path');
+				setTimeout("addPath()",50);
+			}
+			function visualize(){
+				const s = document.querySelector(`div[data-x="${start_x}"][data-y="${start_y}"]`);
+				const e = document.querySelector(`div[data-x="${end_x}"][data-y="${end_y}"]`);
+				addPath();
+				if(state!=""){
+					document.querySelector(`li[data-state="${state}"]`).classList.remove('active');
+					state="";
+				}
+				bfs_vis();
+				s.dataset.state="start";
+				e.dataset.state="end";
+				path.rev();
+				addPath();
+			
+			}
+
+
+			function toggleWall(){
+				if(this.dataset.state=='start' || this.dataset.state=='end'){
+					return;
+				}
+				if(state =="wall" && wall){
+					this.classList.toggle('wall');
+					if(this.dataset.state=='wall'){
+						this.dataset.state='none';
+					}
+					else{
+						this.dataset.state='wall';
+					}
+				}
+			}
+
+
+			function changeState(s){
+				if(state==""){
+					boxes.forEach((box)=>{
+						box.classList.remove('path','bfs');
+						box.dataset.visited = 0;
+						if(box.dataset.state=='path'){
+							box.dataset.state='none';
+						}
+					});
+					queue.empty();
+					path.empty();
+				}
+				else{
+					document.querySelector(`li[data-state="${state}"]`).classList.remove('active');
+				}
+				state = s.dataset.state;
+				s.classList.add('active');
+				//console.log(state);
+			}
+
+
+			function activateState(){
+				if(state=='wall'){
+					if(this.dataset.state=='start' || this.dataset.state=='end'){
+						return;
+					}
+					this.classList.toggle('wall');
+					if(this.dataset.state=='wall'){
+						this.dataset.state='none';
+					}
+					else{
+						this.dataset.state='wall';
+					}
+				}
+				else if(state=='start'){
+					const s = document.querySelector(`div[data-x="${start_x}"][data-y="${start_y}"]`);
+					s.innerHTML = "";
+					s.dataset.state='none'
+					this.classList.remove('wall');
+					this.innerHTML = start;
+					this.dataset.state = 'start';
+					start_x = parseInt(this.dataset.x);
+					start_y = parseInt(this.dataset.y);
+				}
+				else if(state=='end'){
+					const e = document.querySelector(`div[data-x="${end_x}"][data-y="${end_y}"]`);
+					e.innerHTML = "";
+					e.dataset.state='none';
+					this.classList.remove('wall');
+					this.innerHTML = end;
+					this.dataset.state = 'end';
+					end_x = parseInt(this.dataset.x);
+					end_y = parseInt(this.dataset.y);
+				}
+			}
+
+
+
+			//form Grid
+			var Grid = document.querySelector('#Grid');
+			for(let i=0;i<y;i++){
+				grid += "<div class='row'>" ;
+				for(let j=0;j<x;j++){
+					grid += "<div class='box' data-x='" + j + "' data-y='" + i + "' data-state='none' data-visited='0'>"  + "</div>";
+				}
+				grid += "</div>";
+			}
+
+
+			//event listners
+			document.getElementById("Grid").innerHTML = grid;
+			const boxes = document.querySelectorAll('.box');
+			boxes.forEach(box=>box.addEventListener('click',activateState));
+			Grid.addEventListener('mousedown', () => wall = true);
+			boxes.forEach(box=>box.addEventListener('mouseover',toggleWall));
+			document.addEventListener('mouseup', () => wall = false);
+
+		</script>
+	</body>
+</html>

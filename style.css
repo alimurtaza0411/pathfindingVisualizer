@@ -1,0 +1,57 @@
+.row{
+	display: flex;
+	border-collapse: collapse;
+	justify-content: center;
+}
+.box{
+	margin:0;
+	width: 25px;
+	height: 25px;
+	border:1px solid gray;
+	padding: 0;
+}
+.wall{
+	transition: background-color 1s;
+	background-color: black;
+}
+.start{
+	width: 60%;
+	height: 60%;
+	margin: 20%;
+	background-color: blue; 
+}
+.end{
+	transition: background-size 1s, background-color 1s;
+	width: 70%;
+	height: 70%;
+	margin: 15%;
+	border-radius: 100px;
+	background-color: red;
+}
+.bfs{
+	background-color: orange;
+}
+.path{
+	transition: background-color 1s ease;
+	background-color: yellow; 
+}
+ul{
+	display: flex;
+	text-align: center;
+	justify-content: center;
+}
+li{
+	width: 100px;
+	height: 30px;
+	margin-right: 10px ;
+	text-align: center;
+	border: black 5px;
+	display: inline-block;
+	background-color: gray;
+	font: bold;
+	font-size: 25px;
+}
+.active{
+	border:2px black solid;
+	background-color: white;
+}
