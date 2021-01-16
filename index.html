@@ -6,12 +6,22 @@
 	<title>Grid</title>
 </head>
 	<body>
-		<div class="Navbar">
-			<ul>
+		<div class="navbar">
+			<ul class="nav-btn">
 				<li class='start-state' data-state="start" onclick="changeState(this)">Start</li>
 				<li class='wall-state' data-state="wall" onclick="changeState(this)">Wall</li>
 				<li class='end-state' data-state="end" onclick="changeState(this)">End</li>
 				<li class='visualize' onclick="visualize()">Visualize</li>
+				<li class='Algorithm'>
+					<div class="dropdown">
+						<button class="dropbtn">Algorithm</button>
+						<ul class="dropdown-content">
+							<li class="BFS"  data-algo="bfs" onclick="algorithm(this)">BFS</li>
+							<li class="DFS"  data-algo="dfs" onclick="algorithm(this)">DFS</li>
+							<li  class="Dijsktra" data-algo="dijsktra" onclick="algorithm(this)">Dijsktra</li>
+						</ul>
+					</div>
+				</li>
 			</ul>
 		</div>
 		<div id="Grid" class="Grid">
@@ -30,11 +40,14 @@
 			var path = new Stack();
 			var start = "<div class='start'></div>";
 			var end = "<div class='end'></div>";
+			var algo = 'none';
 
 		</script>
 		<script src="state.js"></script>
 		<script src="bfs.js"></script>
 		<script src="dfs.js"></script>
+		<script src="dijsktra.js"></script>
+		<script src="algorithm.js"></script>
 		<script src="visualize.js"></script>
 	</body>
 </html>

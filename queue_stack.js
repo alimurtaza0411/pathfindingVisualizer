@@ -42,34 +42,41 @@ class PriorityQueue{
 	constructor(){
 		this.a = new Array();
 		this.b = new Array();
-		this.c = new Array();
 	}
 	isEmpty(){
 		return this.a.length==0;
 	}
+	distance(element){
+		if(!this.isEmpty()){
+			var i = this.a.indexOf(element);
+			if(i!=-1){
+				return b[i];
+			}
+		}
+		return Infinity;
+	}
 	remove(element){
-		i = this.a.indexOf(element);
-		if(a!=-1){
-			this.a.splice(i,1);
-			this.b.splice(i,1);
-			this.c.splice(i,1);
+		if(!this.isEmpty()){
+			var i = this.a.indexOf(element);
+			if(i!=-1){
+				this.a.splice(i,1);
+				this.b.splice(i,1);
+			}
 		}
 	}
-	enqueue(element,parent,dist){
+	enqueue(element,dist){
 		var flag = true;
 		for(let i=0;i<this.a.length;i++){
 			if(this.b[i]>dist){
 				this.a.splice(i,0,element);
-				this.b.splice(i,0,parent);
-				this.c.splice(i,0,dist);
+				this.b.splice(i,0,dist);
 				flag=false;
 				break;
 			}
 		}
 		if(flag){
 			this.a.push(element);
-			this.b.push(parent);
-			this.c.push(dist);
+			this.b.push(dist);
 		}
 	}
 	dequeue(){
