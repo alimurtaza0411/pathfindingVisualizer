@@ -23,6 +23,7 @@ async function bfs(){
 	if(el.dataset.state=='end'){
 		path.push([u[0],u[1]]);
 		el.dataset.state = 'path';
+		queue.empty();
 		return;
 	}
 

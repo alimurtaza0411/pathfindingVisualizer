@@ -16,14 +16,7 @@ function toggleWall(){
 
 function changeState(s){
     if(state==""){
-        boxes.forEach((box)=>{
-            box.classList.remove('path','explore');
-            delete box.dataset.visited;
-            if(box.dataset.state=='path'){
-                box.dataset.state='none';
-            }
-        });
-        
+       clearExploration();    
     }
     else{
         document.querySelector(`li[data-state="${state}"]`).classList.remove('active');

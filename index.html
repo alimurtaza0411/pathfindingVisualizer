@@ -42,6 +42,16 @@
 			var end = "<div class='end'></div>";
 			var algo = 'none';
 
+			function clearExploration(){
+				boxes.forEach((box)=>{
+					box.classList.remove('path','explore');
+					delete box.dataset.visited;
+					if(box.dataset.state=='path'){
+						box.dataset.state='none';
+					}
+				});
+			}
+
 		</script>
 		<script src="state.js"></script>
 		<script src="bfs.js"></script>

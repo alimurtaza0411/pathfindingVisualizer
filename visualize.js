@@ -12,6 +12,7 @@ function visualize(){
         document.querySelector(`li[data-state="${state}"]`).classList.remove('active');
         state="";
     }
+    clearExploration();
     boxes.forEach((box)=>{
         box.dataset.visited = 0;
     });
