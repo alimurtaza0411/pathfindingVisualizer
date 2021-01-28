@@ -46,24 +46,6 @@ class PriorityQueue{
 	isEmpty(){
 		return this.a.length==0;
 	}
-	distance(element){
-		if(!this.isEmpty()){
-			var i = this.a.indexOf(element);
-			if(i!=-1){
-				return b[i];
-			}
-		}
-		return Infinity;
-	}
-	remove(element){
-		if(!this.isEmpty()){
-			var i = this.a.indexOf(element);
-			if(i!=-1){
-				this.a.splice(i,1);
-				this.b.splice(i,1);
-			}
-		}
-	}
 	enqueue(element,dist){
 		let l=0, r=this.a.length;
 		while((r-l)>1){
@@ -90,5 +72,9 @@ class PriorityQueue{
 			var dist = this.b.shift();
 			return [el,dist];
 		}
+	}
+	empty(){
+		this.a=[];
+		this.b=[];
 	}
 }

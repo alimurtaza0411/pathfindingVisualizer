@@ -29,7 +29,7 @@ async function dfs(){
         setTimeout(()=>{
             el.classList.add('explore');
             resolve();
-        },40);
+        },50);
 	});
 	
 	//adjacennts

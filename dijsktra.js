@@ -17,12 +17,13 @@ function findPath(v){
 function explore(a,b,c){
     if(a[0]<0||a[0]>=x||a[1]<0||a[1]>=y) return;
     const ad = document.querySelector(`div[data-x="${a[0]}"][data-y="${a[1]}"]`);
-	if(ad.dataset.visited==0 && ad.dataset.state!='wall' && pq.distance(a)>c){
-        pq.remove(a);
+    if(ad.dataset.state=='wall') return;
+	if(ad.dataset.visited==0 && ad.dataset.dist>c){
         pq.enqueue(a,c);
+        ad.dataset.dist = c;
         ad.dataset.par_x = b[0];
         ad.dataset.par_y = b[1];
-	}
+    }
 }
 
 
@@ -36,6 +37,7 @@ async function dijsktra(){
 
 	//end
 	if(el.dataset.state=='end'){
+        pq.empty();
 		findPath([u[0][0],u[0][1]]);
 		return;
 	}
@@ -58,7 +60,7 @@ async function dijsktra(){
 			dijsktra().then(()=>{
 				resolve();
 			});
-		},0);
+		},50);
 	});
 	return;
 }

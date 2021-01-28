@@ -11,7 +11,7 @@
 				<li class='start-state' data-state="start" onclick="changeState(this)">Start</li>
 				<li class='wall-state' data-state="wall" onclick="changeState(this)">Wall</li>
 				<li class='end-state' data-state="end" onclick="changeState(this)">End</li>
-				<li class='visualize' onclick="visualize()">Visualize</li>
+				<li class='visualize'>Visualize</li>
 				<li class='Algorithm'>
 					<div class="dropdown">
 						<button class="dropbtn">Algorithm</button>
@@ -41,11 +41,13 @@
 			var start = "<div class='start'></div>";
 			var end = "<div class='end'></div>";
 			var algo = 'none';
+			var exploring = false;
 
 			function clearExploration(){
 				boxes.forEach((box)=>{
 					box.classList.remove('path','explore');
 					delete box.dataset.visited;
+					delete box.dataset.dist;
 					if(box.dataset.state=='path'){
 						box.dataset.state='none';
 					}

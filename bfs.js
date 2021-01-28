@@ -44,7 +44,7 @@ async function bfs(){
 				}
 				resolve();
 			});
-		},20);
+		},50);
 	});
 	return;
 }

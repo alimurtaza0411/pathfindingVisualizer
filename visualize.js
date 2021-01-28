@@ -15,32 +15,38 @@ function visualize(){
     clearExploration();
     boxes.forEach((box)=>{
         box.dataset.visited = 0;
+        box.dataset.dist = Infinity;
     });
     const s = document.querySelector(`div[data-x="${start_x}"][data-y="${start_y}"]`);
     const e = document.querySelector(`div[data-x="${end_x}"][data-y="${end_y}"]`);
-    pq.enqueue([start_x,start_y],0);
-    stack.push([start_x,start_y]);
-    queue.enqueue([start_x,start_y]);
-    //disableVisual();
     if(algo=='bfs'){
+        disableVisual();
+        queue.enqueue([start_x,start_y]);
         bfs().then(()=>{
             s.dataset.state="start";
             e.dataset.state="end";
             addPath();
+            enableVisual();
         });
     }
     else if(algo=='dfs'){
+        disableVisual();
+        stack.push([start_x,start_y]);
         dfs().then(()=>{
             s.dataset.state="start";
             e.dataset.state="end";
             addPath();
+            enableVisual();
         });
     }
     else if(algo=='dijsktra'){
+        disableVisual();
+        pq.enqueue([start_x,start_y],0);
         dijsktra().then(()=>{
             s.dataset.state="start";
             e.dataset.state="end";
             addPath();
+            enableVisual();
         });
     }
     
