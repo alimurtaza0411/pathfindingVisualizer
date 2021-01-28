@@ -65,18 +65,23 @@ class PriorityQueue{
 		}
 	}
 	enqueue(element,dist){
-		var flag = true;
-		for(let i=0;i<this.a.length;i++){
-			if(this.b[i]>dist){
-				this.a.splice(i,0,element);
-				this.b.splice(i,0,dist);
-				flag=false;
-				break;
+		let l=0, r=this.a.length;
+		while((r-l)>1){
+			let m = Math.floor((l+r)/2);
+			if(this.b[m]<=dist){
+				l=m;
+			}
+			else{
+				r=m;
 			}
 		}
-		if(flag){
-			this.a.push(element);
-			this.b.push(dist);
+		if(this.a.length==1 && dist<this.b[0]){
+			this.a.splice(0,0,element);
+			this.b.splice(0,0,dist);
+		}
+		else{
+			this.a.splice(r,0,element);
+			this.b.splice(r,0,dist);
 		}
 	}
 	dequeue(){

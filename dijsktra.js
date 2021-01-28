@@ -15,8 +15,8 @@ function findPath(v){
 
 
 function explore(a,b,c){
-	if(a[0]<0||a[0]>=x||a[1]<0||a[1]>=y) return;
-	const ad = document.querySelector(`div[data-x="${a[0]}"][data-y="${a[1]}"]`);
+    if(a[0]<0||a[0]>=x||a[1]<0||a[1]>=y) return;
+    const ad = document.querySelector(`div[data-x="${a[0]}"][data-y="${a[1]}"]`);
 	if(ad.dataset.visited==0 && ad.dataset.state!='wall' && pq.distance(a)>c){
         pq.remove(a);
         pq.enqueue(a,c);
@@ -37,7 +37,6 @@ async function dijsktra(){
 	//end
 	if(el.dataset.state=='end'){
 		findPath([u[0][0],u[0][1]]);
-		el.dataset.state = 'path';
 		return;
 	}
 
