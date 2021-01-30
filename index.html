@@ -22,6 +22,7 @@
 						</ul>
 					</div>
 				</li>
+				<li class='clear' onclick="clearAll()">Clear</li>
 			</ul>
 		</div>
 		<div id="Grid" class="Grid">
@@ -49,6 +50,17 @@
 					delete box.dataset.visited;
 					delete box.dataset.dist;
 					if(box.dataset.state=='path'){
+						box.dataset.state='none';
+					}
+				});
+			}
+			function clearAll(){
+				boxes.forEach((box)=>{
+					box.classList.remove('path','explore','wall');
+					delete box.dataset.visited;
+					delete box.dataset.dist;
+					box.innerHTML = "";
+					if(box.dataset.state!='none'){
 						box.dataset.state='none';
 					}
 				});
