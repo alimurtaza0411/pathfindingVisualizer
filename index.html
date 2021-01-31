@@ -59,6 +59,10 @@
 					box.classList.remove('path','explore','wall');
 					delete box.dataset.visited;
 					delete box.dataset.dist;
+					start_x = 0;
+					start_y = 0;
+					end_x = 49;
+					end_y = 19;
 					box.innerHTML = "";
 					if(box.dataset.state!='none'){
 						box.dataset.state='none';
