@@ -19,8 +19,8 @@ function visualize(){
     });
     const s = document.querySelector(`div[data-x="${start_x}"][data-y="${start_y}"]`);
     const e = document.querySelector(`div[data-x="${end_x}"][data-y="${end_y}"]`);
-    s.dataset.state="start";
-    e.dataset.state="end";
+    s.innerHTML=start;
+    e.innerHTML=end;
     if(algo=='bfs'){
         disableVisual();
         queue.enqueue([start_x,start_y]);
