@@ -20,7 +20,7 @@ function visualize(){
     const s = document.querySelector(`div[data-x="${start_x}"][data-y="${start_y}"]`);
     const e = document.querySelector(`div[data-x="${end_x}"][data-y="${end_y}"]`);
     s.innerHTML=start;
-    e.innerHTML=end;
+    e.innerHTML = end;
     if(algo=='bfs'){
         disableVisual();
         queue.enqueue([start_x,start_y]);
@@ -34,7 +34,9 @@ function visualize(){
     else if(algo=='dfs'){
         disableVisual();
         stack.push([start_x,start_y]);
+        s.dataset.visited=1;
         dfs().then(()=>{
+            path.push([start_x,start_y]);
             s.dataset.state="start";
             e.dataset.state="end";
             addPath();
