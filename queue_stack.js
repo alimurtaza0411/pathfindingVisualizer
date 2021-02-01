@@ -36,6 +36,9 @@ class Stack {
 			return this.a.pop();
 		}
 	}
+	empty(){
+		this.a=[];
+	}
 }
 
 class PriorityQueue{

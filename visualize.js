@@ -46,7 +46,20 @@ function visualize(){
     else if(algo=='dijsktra'){
         disableVisual();
         pq.enqueue([start_x,start_y],0);
+        s.dataset.dist = 0;
         dijsktra().then(()=>{
+            s.dataset.state="start";
+            e.dataset.state="end";
+            addPath();
+            enableVisual();
+        });
+    }
+    else if(algo=='AStar'){
+        disableVisual();
+        var g = Math.abs(end_x-start_x) + Math.abs(end_y-start_y);
+        f.enqueue([start_x,start_y],g);
+        s.dataset.dist = 0;
+        AStar().then(()=>{
             s.dataset.state="start";
             e.dataset.state="end";
             addPath();

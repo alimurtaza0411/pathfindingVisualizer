@@ -21,6 +21,7 @@ async function dfs(){
 				
 	if(el.dataset.state=='end'){
 		path.push([u[0],u[1]]);
+		stack.empty();
 		el.dataset.state='path';
 		return true;
 	}

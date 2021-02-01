@@ -30,7 +30,7 @@ function explore(a,b,c){
 
 async function dijsktra(){
 	if(pq.isEmpty()) return;
-	
+ 
     var u = pq.dequeue();
     const el = document.querySelector(`div[data-x="${u[0][0]}"][data-y="${u[0][1]}"]`);
     el.dataset.visited =1;
