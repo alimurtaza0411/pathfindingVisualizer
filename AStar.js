@@ -12,8 +12,8 @@ function findPath(v){
 
 }
 
-function manhattan(a){
-    return Math.abs(end_x-a[0]) + Math.abs(end_y-a[1]);
+function manhattan(a,b){
+    return Math.abs(a[0]-b[0]) + Math.abs(a[1]-b[1]);
 }
 
 function exploreAStar(a,b,g){
@@ -21,8 +21,9 @@ function exploreAStar(a,b,g){
     const ad = document.querySelector(`div[data-x="${a[0]}"][data-y="${a[1]}"]`);
     if(ad.dataset.state=="wall") return;
     if(ad.dataset.visited==0 && ad.dataset.dist>g){
-        var _f = g + manhattan(a);
-        f.enqueue(a,_f);
+        var h = manhattan([end_x,end_y],a);
+        var temp = h + g;
+        f.enqueue(a,temp);
         ad.dataset.dist = g;
         ad.dataset.par_x = b[0];
         ad.dataset.par_y = b[1];
@@ -35,6 +36,7 @@ async function AStar(){
     var u = f.dequeue();
     const el = document.querySelector(`div[data-x="${u[0][0]}"][data-y="${u[0][1]}"]`);
     el.dataset.visited = 1;
+    el.classList.add('explore');
 
     if(el.dataset.state=="end"){
         findPath(u[0]);
@@ -43,7 +45,7 @@ async function AStar(){
     }
 
     var ad;
-    var g = parseInt(el.dataset.dist) + 1;
+    var g = parseInt(el.dataset.dist) +1;
     ad = [u[0][0]+1,u[0][1]];
     exploreAStar(ad,u[0],g);
     ad = [u[0][0],u[0][1]+1];
@@ -55,11 +57,10 @@ async function AStar(){
 
     await new Promise(function(resolve,reject){
         setTimeout(()=>{
-            el.classList.add('explore');
             AStar().then(()=>{
                 resolve();
             })
-        },50);
+        },100);
     });
     return;
 }

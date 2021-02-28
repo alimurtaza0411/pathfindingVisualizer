@@ -50,6 +50,8 @@
 					box.classList.remove('path','explore');
 					delete box.dataset.visited;
 					delete box.dataset.dist;
+					delete box.dataset.par_x;
+					delete box.dataset.par_y;
 					if(box.dataset.state=='path'){
 						box.dataset.state='none';
 					}
