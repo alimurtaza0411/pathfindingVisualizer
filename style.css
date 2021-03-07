@@ -31,6 +31,9 @@
 .explore{
 	background-color: orange;
 }
+.jps{
+	background-color: lightgrey;
+}
 .path{
 	transition: background-color 1s ease;
 	background-color: yellow; 

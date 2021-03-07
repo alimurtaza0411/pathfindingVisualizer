@@ -20,6 +20,7 @@
 							<li class="DFS"  data-algo="dfs" onclick="algorithm(this)">DFS</li>
 							<li  class="Dijsktra" data-algo="dijsktra" onclick="algorithm(this)">Dijsktra</li>
 							<li class="AStar"  data-algo="AStar" onclick="algorithm(this)">A Star</li>
+							<li class="JPS"  data-algo="JPS" onclick="algorithm(this)">JPS</li>
 						</ul>
 					</div>
 				</li>
@@ -47,7 +48,7 @@
 
 			function clearExploration(){
 				boxes.forEach((box)=>{
-					box.classList.remove('path','explore');
+					box.classList.remove('path','explore','jps');
 					delete box.dataset.visited;
 					delete box.dataset.dist;
 					delete box.dataset.par_x;
@@ -59,7 +60,7 @@
 			}
 			function clearAll(){
 				boxes.forEach((box)=>{
-					box.classList.remove('path','explore','wall');
+					box.classList.remove('path','explore','wall','jps');
 					delete box.dataset.visited;
 					delete box.dataset.dist;
 					start_x = 0;
@@ -78,6 +79,7 @@
 		<script src="bfs.js"></script>
 		<script src="dfs.js"></script>
 		<script src="AStar.js"></script>
+		<script src="jps.js"></script>
 		<script src="dijsktra.js"></script>
 		<script src="algorithm.js"></script>
 		<script src="visualize.js"></script>

@@ -3,6 +3,7 @@ function addPath(){
         return;
     }
     var b = path.pop();
+    document.querySelector(`div[data-x="${b[0]}"][data-y="${b[1]}"]`).classList.remove('jps');
     document.querySelector(`div[data-x="${b[0]}"][data-y="${b[1]}"]`).classList.add('path');
     setTimeout("addPath()",50);
 }
@@ -17,6 +18,7 @@ function visualize(){
         box.dataset.visited = 0;
         box.dataset.dist = Infinity;
     });
+    path.empty();
     const s = document.querySelector(`div[data-x="${start_x}"][data-y="${start_y}"]`);
     const e = document.querySelector(`div[data-x="${end_x}"][data-y="${end_y}"]`);
     s.innerHTML=start;
@@ -65,6 +67,21 @@ function visualize(){
             addPath();
             enableVisual();
         });
+    }
+    else if(algo=='JPS'){
+        disableVisual();
+        var h = euclidian([start_x,start_y],[end_x,end_y]);
+        jps_pq.enqueue([start_x,start_y],h);
+        s.dataset.dist = 0;
+        s.dataset.dir_x = (end_x==start_x)?0:((end_x>start_x)?1:-1);
+        s.dataset.dir_y = (end_y==start_y)?0:((end_y>start_y)?1:-1);
+        JPS().then(()=>{
+            s.dataset.state="start";
+            e.dataset.state="end";
+            console.log("end");
+            addPath();
+            enableVisual();
+        })
     }
     
 }

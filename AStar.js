@@ -5,7 +5,7 @@ function findPath(v){
         path.push(v);
         return;
     }
-    el = document.querySelector(`div[data-x="${v[0]}"][data-y="${v[1]}"]`);
+    var el = document.querySelector(`div[data-x="${v[0]}"][data-y="${v[1]}"]`);
     path.push(v);
     el.dataset.state = 'path';
     findPath([el.dataset.par_x, el.dataset.par_y]);
