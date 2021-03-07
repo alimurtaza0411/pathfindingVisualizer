@@ -38,13 +38,13 @@ async function jump(a,direction){
     const jump_el = document.querySelector(`div[data-x="${n[0]}"][data-y="${n[1]}"]`);
     if(jump_el.dataset.state=='wall' || jump_el.dataset.visited==1) return null;
     if(jump_el.dataset.state=='end') return n;
+    if(forced_neig(n,direction)!=null) return n;
     await new Promise(function(resolve,reject){
         setTimeout(()=>{
             jump_el.classList.add('jps');
             resolve();
         },5)
     });
-    if(forced_neig(n,direction)!=null) return n;
     if(direction[0]!=0&&direction[1]!=0){
         var flag=false;
         await new Promise(function(resolve,reject){
@@ -65,15 +65,17 @@ async function exploreJPS(a,g,direction){
     await new Promise(function(resolve,reject){
         jump(a,direction).then((value)=>{
             if(value!=null){
-                var h = euclidian([end_x,end_y],value);
                 g += euclidian(a,value);
-                jps_pq.enqueue(value,g+h);
                 var el = document.querySelector(`div[data-x="${value[0]}"][data-y="${value[1]}"]`);
-                el.dataset.dist = g;
-                el.dataset.dir_x = direction[0];
-                el.dataset.dir_y = direction[1];
-                el.dataset.par_x = a[0];
-                el.dataset.par_y = a[1];
+                if(el.dataset.dist>=g){
+                    var h = euclidian([end_x,end_y],value);
+                    jps_pq.enqueue(value,g+h);
+                    el.dataset.dist = g;
+                    el.dataset.dir_x = direction[0];
+                    el.dataset.dir_y = direction[1];
+                    el.dataset.par_x = a[0];
+                    el.dataset.par_y = a[1];
+                }
             }
             resolve();
         });
@@ -137,8 +139,3 @@ async function JPS(){
     });
     return;  
 }
-
-
-
-//direction[0] = (end_x==a[0])?0:((end_x>a[0])?1:-1);
- //   direction[1] = (end_y==a[1])?0:((end_y>a[1])?1:-1);
