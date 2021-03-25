@@ -26,6 +26,16 @@ function changeState(s){
 }
 
 
+function algorithm(a){
+    if(!exploring){
+        algo = a.dataset.algo;
+        var con = "Visualize-"+algo;
+        vis.innerHTML = con;
+        vis.onclick = visualize;
+    }
+}
+
+
 function activateState(){
     if(state=='wall'){
         if(this.dataset.state=='start' || this.dataset.state=='end'){

@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="./styles/style.css">
 	<title>Grid</title>
 </head>
 	<body>
@@ -29,8 +29,7 @@
 		</div>
 		<div id="Grid" class="Grid">
 		</div>
-		<script src="grid.js"></script>
-		<script src="queue_stack.js"></script>
+		<script src="./components/dataStructures.js"></script>
 		<script>
 			
 			//variables
@@ -45,43 +44,29 @@
 			var end = "<div class='end'></div>";
 			var algo = 'none';
 			var exploring = false;
+			var grid = "";
+			var x = 50, y=20;
+			var Grid = document.querySelector('#Grid');
+			const vis = document.querySelector(".visualize");
 
-			function clearExploration(){
-				boxes.forEach((box)=>{
-					box.classList.remove('path','explore','jps');
-					delete box.dataset.visited;
-					delete box.dataset.dist;
-					delete box.dataset.par_x;
-					delete box.dataset.par_y;
-					if(box.dataset.state=='path'){
-						box.dataset.state='none';
-					}
-				});
+
+			for(let i=0;i<y;i++){
+				grid += "<div class='row'>" ;
+				for(let j=0;j<x;j++){
+					grid += "<div class='box' data-x='" + j + "' data-y='" + i + "' data-state='none'>"  + "</div>";
+				}
+				grid += "</div>";
 			}
-			function clearAll(){
-				boxes.forEach((box)=>{
-					box.classList.remove('path','explore','wall','jps');
-					delete box.dataset.visited;
-					delete box.dataset.dist;
-					start_x = 0;
-					start_y = 0;
-					end_x = 49;
-					end_y = 19;
-					box.innerHTML = "";
-					if(box.dataset.state!='none'){
-						box.dataset.state='none';
-					}
-				});
-			}
+
+			document.getElementById("Grid").innerHTML = grid;
 
 		</script>
-		<script src="state.js"></script>
-		<script src="bfs.js"></script>
-		<script src="dfs.js"></script>
-		<script src="AStar.js"></script>
-		<script src="jps.js"></script>
-		<script src="dijsktra.js"></script>
-		<script src="algorithm.js"></script>
-		<script src="visualize.js"></script>
+		<script src="./components/state.js"></script>
+		<script src="./algorithms/bfs.js"></script>
+		<script src="./algorithms/dfs.js"></script>
+		<script src="./algorithms/AStar.js"></script>
+		<script src="./algorithms/jps.js"></script>
+		<script src="./algorithms/dijsktra.js"></script>
+		<script src="./components/visualize.js"></script>
 	</body>
 </html>

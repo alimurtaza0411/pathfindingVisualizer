@@ -1,3 +1,39 @@
+function clearExploration(){
+    boxes.forEach((box)=>{
+        box.classList.remove('path','explore','jps');
+        delete box.dataset.visited;
+        delete box.dataset.dist;
+        delete box.dataset.par_x;
+        delete box.dataset.par_y;
+        if(box.dataset.state=='path'){
+            box.dataset.state='none';
+        }
+    });
+}
+function clearAll(){
+    boxes.forEach((box)=>{
+        box.classList.remove('path','explore','wall','jps');
+        delete box.dataset.visited;
+        delete box.dataset.dist;
+        start_x = 0;
+        start_y = 0;
+        end_x = 49;
+        end_y = 19;
+        box.innerHTML = "";
+        if(box.dataset.state!='none'){
+            box.dataset.state='none';
+        }
+    });
+}
+
+function disableVisual(){
+    vis.onclick = null;
+    exploring = true;
+}
+function enableVisual(){
+    vis.onclick = visualize;
+    exploring = false;
+}
 function addPath(){
     if(path.isEmpty()){
         return;
