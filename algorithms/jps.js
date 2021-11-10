@@ -4,12 +4,12 @@ function forced_neig(a,direction){
     if(direction[0]!=0&&direction[1]!=0){
         if(a[0]-direction[0]>=0 && a[0]-direction[0]<x && a[1]+direction[1]>=0 && a[1]+direction[1]<y){
             var ad = document.querySelector(`div[data-x="${a[0]-direction[0]}"][data-y="${a[1]}"]`);
-            var force_ad = document.querySelector(`div[data-x="${a[0]-direction[0]}"][data-y="${a[1]+direction[1]}"]`);
+            var force_ad = document.querySelector(`div[data-x="${a[0]}"][data-y="${a[1]+direction[1]}"]`);
             if(ad.dataset.state=='wall' && force_ad.dataset.state!='wall') return force_ad;
         }
         if(a[0]+direction[0]>=0 && a[0]+direction[0]<x && a[1]-direction[1]>=0 && a[1]-direction[1]<y){
             ad = document.querySelector(`div[data-x="${a[0]}"][data-y="${a[1]-direction[1]}"]`);
-            force_ad = document.querySelector(`div[data-x="${a[0]+direction[0]}"][data-y="${a[1]-direction[1]}"]`);
+            force_ad = document.querySelector(`div[data-x="${a[0]+direction[0]}"][data-y="${a[1]}"]`);
             if(ad.dataset.state=='wall' && force_ad.dataset.state!='wall') return force_ad;
         }
     }

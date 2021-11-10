@@ -16,12 +16,17 @@ function manhattan(a,b){
     return Math.abs(a[0]-b[0]) + Math.abs(a[1]-b[1]);
 }
 
+function euclidian(a,b){
+    return Math.sqrt(Math.pow((a[0]-b[0]),2) + Math.pow((a[1]-b[1]),2));
+}
+
 function exploreAStar(a,b,g){
+    console.log(a,b)
     if(a[0]<0||a[0]>=x||a[1]<0||a[1]>=y) return;
     const ad = document.querySelector(`div[data-x="${a[0]}"][data-y="${a[1]}"]`);
     if(ad.dataset.state=="wall") return;
     if(ad.dataset.visited==0 && ad.dataset.dist>g){
-        var h = manhattan([end_x,end_y],a);
+        var h = euclidian([end_x,end_y],a);
         var temp = h + g;
         f.enqueue(a,temp);
         ad.dataset.dist = g;
@@ -45,7 +50,7 @@ async function AStar(){
     }
 
     var ad;
-    var g = parseInt(el.dataset.dist) +1;
+    var g = parseFloat(el.dataset.dist) +1;
     ad = [u[0][0]+1,u[0][1]];
     exploreAStar(ad,u[0],g);
     ad = [u[0][0],u[0][1]+1];
@@ -53,6 +58,16 @@ async function AStar(){
     ad = [u[0][0]-1,u[0][1]];
     exploreAStar(ad,u[0],g);
     ad = [u[0][0],u[0][1]-1];
+    exploreAStar(ad,u[0],g);
+
+    g = parseFloat(el.dataset.dist) + Math.sqrt(2);
+    ad = [u[0][0]+1,u[0][1]+1];
+    exploreAStar(ad,u[0],g);
+    ad = [u[0][0]-1,u[0][1]+1];
+    exploreAStar(ad,u[0],g);
+    ad = [u[0][0]-1,u[0][1]-1];
+    exploreAStar(ad,u[0],g);
+    ad = [u[0][0]+1,u[0][1]-1];
     exploreAStar(ad,u[0],g);
 
     await new Promise(function(resolve,reject){
