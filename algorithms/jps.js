@@ -43,7 +43,7 @@ async function jump(a,direction){
         setTimeout(()=>{
             jump_el.classList.add('jps');
             resolve();
-        },5)
+        },1)
     });
     if(direction[0]!=0&&direction[1]!=0){
         var flag=false;
@@ -104,6 +104,14 @@ async function JPS(){
     if(jps_pq.isEmpty()) return;
     var u =jps_pq.dequeue();
     const el = document.querySelector(`div[data-x="${u[0][0]}"][data-y="${u[0][1]}"]`);
+    if(parseInt(el.dataset.visited)==1){
+        await new Promise(function(resolve,reject){
+            JPS().then(()=>{
+                resolve();
+            });
+        });
+        return;
+    }
     el.dataset.visited = 1;
     el.classList.remove('jps');
     el.classList.add('explore');
